@@ -14,13 +14,27 @@ const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshBasicMaterial({ color: 0x00aaff });
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
+const wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0x888888, wireframe: true });
+
+console.log('tamñano cubo', geometry.parameters)
+
+const planeGeometry = new THREE.PlaneGeometry(10, 10); // Width and height
+const planeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 , side: THREE.DoubleSide}); // Green color
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+plane.position.set(0, 0, -0.5); // Example position: x=0, y=1, z=0
+scene.add(plane);
+
+// Create a wireframe cube with the same geometry
+const wireframeCube = new THREE.Mesh(geometry, wireframeMaterial);
+cube.add(wireframeCube);
 
 // Set camera position
 camera.position.z = 5;
 
+
 // Create orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true; // Enable damping for smoother controls
+controls.enableDamping = false; // Enable damping for smoother controls
 controls.update();
 
 // Animation loop
@@ -28,8 +42,8 @@ const animate = () => {
   requestAnimationFrame(animate);
 
   // Rotate the cube
-  cube.rotation.x += 0.005;
-  cube.rotation.y += 0.005;
+//   cube.rotation.x += 0.005;
+//   cube.rotation.y += 0.005;
 
   // Update the orbit controls
   controls.update();
